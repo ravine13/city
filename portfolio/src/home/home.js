@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { HiArrowNarrowRight } from 'react-icons/hi'; // Arrow icon for button
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaGithub } from 'react-icons/fa'; // Skill icons
-import panda from '../assets/images/panda.webp';
+import panda from '../assets/images/panda2.webp';
 import { Link } from "react-scroll"; // For smooth scrolling
 
 const Home = () => {
+  const [typedName, setTypedName] = useState('');
+  const name = "Derick Kuria";  // Name to be typed
+
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setTypedName((prev) => prev + name[index]);
+      index += 1;
+      if (index === name.length) clearInterval(interval);
+    }, 150); // Adjust typing speed (ms)
+    
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, []);
+
   return (
     // Main container - full screen with dark background
     <div name="home" className="h-screen w-full bg-[#0a192f]">
@@ -12,9 +26,9 @@ const Home = () => {
       <div className="max-w-screen-lg mx-auto flex flex-col items-center justify-center h-full px-4 md:flex-row">
         {/* Left side - Text content */}
         <div className="flex flex-col justify-center h-full">
-          {/* Main headline */}
+          {/* Main headline with typing effect */}
           <h2 className="text-4xl sm:text-7xl font-bold text-white">
-            Hello, I'm DERICK KURIA
+            Hello, I'm {name}
           </h2>
           {/* Brief introduction */}
           <p className="text-gray-500 py-4 max-w-md">
@@ -36,12 +50,12 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Right side - Profile image */}
+        {/* Right side - Profile image with reduced size */}
         <div>
           <img
             src={panda}
             alt="my profile"
-            className="rounded-2xl mx-auto w-2/3 md:w-full"
+            className="rounded-2xl mx-auto w-1 md:w-3/4" // Reduced image size
           />
         </div>
       </div>
